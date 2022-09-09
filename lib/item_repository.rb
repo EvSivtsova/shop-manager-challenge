@@ -6,7 +6,7 @@ require_relative './order_repository'
 class ItemRepository
 
   def all
-    sql = 'SELECT id, name, unit_price, quantity FROM items;'
+    sql = 'SELECT id, name, unit_price::numeric, quantity FROM items;'
     result_set = DatabaseConnection.exec_params(sql, [])
     items = []
     result_set.each do |record|
@@ -63,7 +63,7 @@ class ItemRepository
     item = Item.new
     item.id = record['id'].to_i
     item.name = record['name']
-    item.unit_price = record['unit_price']
+    item.unit_price = record['unit_price'].to_f
     item.quantity = record['quantity'].to_i
     return item
   end  
